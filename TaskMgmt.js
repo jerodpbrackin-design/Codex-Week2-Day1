@@ -1,29 +1,25 @@
 const prompt = require('prompt-sync')();
 
-let tasks = [];
+let taskNames = [];
+let taskDurations = [];
+let report = [];
 
 const numberOfTasks = parseInt(prompt("How many tasks do you want to enter? "), 10);
 
 for (let i = 0; i < numberOfTasks; i++) {
   const name = prompt(`Enter the name for task #${i + 1}: `);
-  const durationStr = prompt(`Enter the duration (in hours) for "${name}": `);
+  const duration = prompt(`Enter the duration (in hours) for "${name}": `);
 
-  // Grab numeric hours from strings like "3.5 hrs", "2 hours", etc.
-  const hours = parseFloat(durationStr);
-
-  tasks.push({
-    name,
-    durationStr,
-    hours
-  });
+  taskNames.push(name);
+  taskDurations.push(duration);
 }
 
-// Sort descending by numeric hours
-tasks.sort((a, b) => b.hours - a.hours);
+console.table(taskNames);
+console.table(taskDurations);
 
-console.table(tasks.map(t => t.name));
-console.table(tasks.map(t => t.durationStr));
-
-let report = tasks.map(t => `Task: ${t.name} (${t.durationStr} hrs)`);
+for (let i = 0; i < taskNames.length; i++) {
+  const message = `Task: ${taskNames[i]} (${taskDurations[i]} hrs)`;
+  report.push(message);
+}
 
 console.table(report);
